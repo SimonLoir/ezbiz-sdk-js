@@ -4,6 +4,10 @@ export default class EZBizSDK {
         private server = 'https://ezbiz.sloir.xyz/'
     ) {}
 
+    public async me() {
+        return await this.GET('me');
+    }
+
     public async login(email: string, password: string) {
         return await this.POST('login', { email, password });
     }
