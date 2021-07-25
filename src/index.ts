@@ -16,7 +16,8 @@ export default class EZBizSDK {
     constructor({ version, server }: Options) {
         this.__invoices = new EZInvoicesAPI(this);
         this.__version = version || 'v0';
-        this.__server = server || 'https://ezbiz.loir.xyz/';
+        this.__server = server || 'https://ezbiz.be/';
+        this.__customers = new EZCustomerAPI(this);
     }
 
     /**
@@ -36,23 +37,24 @@ export default class EZBizSDK {
     }
 
     public async POST(endpoint: string, data: any) {
-        const myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
         const raw = JSON.stringify(data);
         const requestOptions: RequestInit = {
             method: 'POST',
-            headers: myHeaders,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: raw,
             redirect: 'follow',
         };
         try {
-            return await (
-                await fetch(
-                    this.__server + 'api/' + this.__version + '/' + endpoint,
-                    requestOptions
-                )
-            ).json();
+            let res = await fetch(
+                this.__server + 'api/' + this.__version + '/' + endpoint,
+                requestOptions
+            );
+            return await res.json();
         } catch (error) {
+            console.log(error);
             return {
                 error: true,
                 message: 'err:unknown',
