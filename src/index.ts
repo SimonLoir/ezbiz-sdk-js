@@ -5,6 +5,8 @@ type Version = 'v0' | 'v1';
 type Options = {
     version?: Version;
     server?: string;
+    invoices_server?: string;
+    invoices_api_token?: string;
 };
 
 export default class EZBizSDK {
@@ -12,11 +14,20 @@ export default class EZBizSDK {
     private __customers: EZCustomerAPI;
     private __version: Version;
     private __server: string;
+    private __invoices_api_token: string;
+    private __invoices_server: string;
 
-    constructor({ version, server }: Options) {
+    constructor({
+        version,
+        server,
+        invoices_server,
+        invoices_api_token,
+    }: Options) {
         this.__invoices = new EZInvoicesAPI(this);
         this.__version = version || 'v0';
         this.__server = server || 'https://ezbiz.be/';
+        this.__invoices_server = invoices_server || 'https://invoice.ezbiz.be';
+        this.__invoices_api_token = invoices_api_token || '<TOKEN>';
         this.__customers = new EZCustomerAPI(this);
     }
 
@@ -83,5 +94,13 @@ export default class EZBizSDK {
 
     public get customers(): EZCustomerAPI {
         return this.__customers;
+    }
+
+    public get invoices_server(): string {
+        return this.__invoices_server;
+    }
+
+    public get invoices_api_token(): string {
+        return this.__invoices_api_token;
     }
 }
