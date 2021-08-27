@@ -65,10 +65,7 @@ export default class EZInvoicesAPI {
         };
 
         return await (
-            await fetch(
-                'https://invoices.ezbiz.be/build?lang=fr',
-                requestOptions
-            )
+            await fetch(this.__server + '/build?lang=fr', requestOptions)
         ).json();
     }
 }
