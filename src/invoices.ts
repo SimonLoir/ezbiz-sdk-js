@@ -32,7 +32,7 @@ export default class EZInvoicesAPI {
         this.__token = sdk.invoices_api_token;
     }
 
-    public async create(details: invoice_details) {
+    public async createFile(details: invoice_details) {
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -67,5 +67,9 @@ export default class EZInvoicesAPI {
         return await (
             await fetch(this.__server + '/build?lang=fr', requestOptions)
         ).json();
+    }
+
+    public get(invoice_id: string) {
+        return this.sdk.GET('invoices/' + invoice_id);
     }
 }
