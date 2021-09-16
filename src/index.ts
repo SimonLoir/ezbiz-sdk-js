@@ -2,9 +2,9 @@ import EZCustomerAPI from './customers';
 import EZInvoicesAPI from './invoices';
 import EZPayementsAPI from './payements';
 
-type Version = 'v0' | 'v1';
-type Options = {
-    version?: Version;
+export type EZBizVersion = 'v0' | 'v1';
+export type EZBizOptions = {
+    version?: EZBizVersion;
     server?: string;
     invoices_server?: string;
     invoices_api_token?: string;
@@ -14,7 +14,7 @@ export default class EZBizSDK {
     private __invoices: EZInvoicesAPI;
     private __customers: EZCustomerAPI;
     private __payements: EZPayementsAPI;
-    private __version: Version;
+    private __version: EZBizVersion;
     private __server: string;
     private __invoices_api_token: string;
     private __invoices_server: string;
@@ -24,7 +24,7 @@ export default class EZBizSDK {
         server,
         invoices_server,
         invoices_api_token,
-    }: Options) {
+    }: EZBizOptions) {
         this.__version = version || 'v0';
         this.__server = server || 'https://ezbiz.be/';
         this.__invoices_server = invoices_server || 'https://invoice.ezbiz.be';
